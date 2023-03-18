@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -7,13 +7,13 @@ import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
+import { useDispatch } from "react-redux";
 import { set, deleteItem, like } from "./store/items";
 import { Button } from "@mui/material";
-import { RootState } from "./store/store";
+import { store } from "./store/store";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Divider from "@mui/material/Divider";
-import Likes from "./Likes";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -25,28 +25,35 @@ const StyledContainer = styled.div`
 
 function App() {
   const dispatch = useDispatch();
-  const items = useSelector<RootState>(store => store?.items.value);
-  
+  const state = store.getState()?.items;
 
-  const handleDelete = (id: number) => {
+  const [data, setData] = useState({ value: [] });
+
+  const handleDelete = (id: any) => {
     dispatch(deleteItem(id));
+    // @ts-ignore
+    setData(state);
   };
 
   const addItem = () => {
     dispatch(
       set({
         // @ts-ignore
-        id: items.length + 1,
+        id: state.value.length + 1,
         likes: 0,
         // @ts-ignore
-        title: `item number${items.length + 1}`,
+        title: `item number${state.value.length + 1}`,
       })
     );
-
+    // @ts-ignore
+    setData(state);
   };
 
   const likeItem = (id: number) => {
+    // @ts-ignore
     dispatch(like(id));
+    // @ts-ignore
+    setData(state);
   };
 
   return (
@@ -54,9 +61,8 @@ function App() {
       <Button variant="contained" onClick={addItem}>
         Add Item
       </Button>
-      <Likes />
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {(items as any[]).map((value, ind) => {
+        {(state.value || data.value).map((value, ind) => {
           const labelId = `checkbox-list-label-${value}`;
           return (
             <>
