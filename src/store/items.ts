@@ -27,13 +27,11 @@ export const counterSlice = createSlice({
       // @ts-ignore
       state.value.push(action.payload);
     },
-    deleteItem: (state, action: PayloadAction<ItemsType>) => {
-      // @ts-ignore
+    deleteItem: (state, action: PayloadAction<number>) => {
       state.value = state.value.filter((item) => item.id !== action.payload);
     },
-    like: (state, action: PayloadAction<ItemsType>) => {
+    like: (state, action: PayloadAction<number>) => {
       const indexes = state.value.findIndex(
-        // @ts-ignore
         (item) => item.id === action.payload
       );
       const allElements = [...state.value];
