@@ -27,11 +27,13 @@ export const counterSlice = createSlice({
       // @ts-ignore
       state.value.push(action.payload);
     },
-    deleteItem: (state, action: PayloadAction<number>) => {
+    deleteItem: (state, action: PayloadAction<ItemsType>) => {
+      // @ts-ignore
       state.value = state.value.filter((item) => item.id !== action.payload);
     },
-    like: (state, action: PayloadAction<number>) => {
+    like: (state, action: PayloadAction<ItemsType>) => {
       const indexes = state.value.findIndex(
+        // @ts-ignore
         (item) => item.id === action.payload
       );
       const allElements = [...state.value];
@@ -40,9 +42,20 @@ export const counterSlice = createSlice({
         likes: allElements[indexes].likes++,
       };
     },
+    // @ts-ignore
+    likesCounter: (state, action: PayloadAction<ItemsType>) => {
+      const likedElements = action.payload
+        // @ts-ignore
+        .slice()
+        // @ts-ignore
+        .sort((a, b) => a.likes - b.likes)
+        .reverse()
+        .splice(0, 3);
+      return { ...state, likedElements };
+    },
   },
 });
-export const { set, deleteItem, like } = counterSlice.actions;
+export const { set, deleteItem, like, likesCounter } = counterSlice.actions;
 export const selectCount = (state: RootState) => state.items.value;
 
 export default counterSlice.reducer;

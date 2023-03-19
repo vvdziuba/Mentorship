@@ -25,10 +25,10 @@ const StyledContainer = styled.div`
 
 function App() {
   const dispatch = useDispatch();
-  const items = useSelector<RootState>(store => store?.items.value);
-  
+  const items = useSelector<RootState>((store) => store?.items.value);
 
   const handleDelete = (id: number) => {
+    // @ts-ignore
     dispatch(deleteItem(id));
   };
 
@@ -42,10 +42,10 @@ function App() {
         title: `item number${items.length + 1}`,
       })
     );
-
   };
 
   const likeItem = (id: number) => {
+    // @ts-ignore
     dispatch(like(id));
   };
 
