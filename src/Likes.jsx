@@ -48,7 +48,7 @@ const Likes = (props) => {
   useEffect(() => {
     likesCounter(items);
   }, [items, likesCounter]);
-  console.log(likedElements);
+
   if (typeof likedElements == "undefined" || likedElements.length == 0) {
     return <></>;
   }
