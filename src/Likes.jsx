@@ -6,7 +6,6 @@ import ListItem from "@mui/material/ListItem";
 import styled from "styled-components";
 import ListItemText from "@mui/material/ListItemText";
 
-
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -16,12 +15,32 @@ const StyledContainer = styled.div`
   width: 360px;
   text-align: center;
   margin-top: 5px;
+  height: 200px;
+  position: relative;
 `;
 
 const StyledListItem = styled(ListItemText)`
-text-align: center;
+  text-align: center;
 `;
 
+const StyledTitle = styled.p`
+  font-weight: bold;
+  position: absolute;
+  top: 1px;
+  /* left: 40px; */
+  text-align: center;
+  width: 100%;
+`;
+
+const StyledDivider = styled.hr`
+  background-color: black;
+  color: black;
+  width: 100%;
+`;
+
+const StyledListCont = styled(List)`
+  margin-top: 35px !important;
+`;
 
 const Likes = (props) => {
   const { items, likesCounter, likedElements } = props;
@@ -29,24 +48,34 @@ const Likes = (props) => {
   useEffect(() => {
     likesCounter(items);
   }, [items, likesCounter]);
-
-
+  console.log(likedElements);
+  if (typeof likedElements == "undefined" || likedElements.length == 0) {
+    return <></>;
+  }
   return (
     <StyledContainer>
-    <List sx={{ width: "100%", maxWidth: 360}}>
-      {(likedElements || []).map((elem) => {
-        if(elem.likes){
-          return <ListItem><StyledListItem>{`${elem.title} has ${elem.likes} likes`}</StyledListItem></ListItem>;
-        }
-      })}
-    </List>
+      <StyledTitle>
+        Most Liked Elements:
+        <StyledDivider />
+      </StyledTitle>
+      <StyledListCont sx={{ width: "100%", maxWidth: 360 }}>
+        {(likedElements || []).map((elem) => {
+          if (elem.likes) {
+            return (
+              <ListItem>
+                <StyledListItem>{`${elem.title} has ${elem.likes} likes`}</StyledListItem>
+              </ListItem>
+            );
+          }
+        })}
+      </StyledListCont>
     </StyledContainer>
-    )
+  );
 };
 
 const mapStateToProps = (state) => ({
   items: state?.items.value,
-  likedElements: state?.items.likedElements
+  likedElements: state?.items.likedElements,
 });
 
 const mapDispatchToProps = (dispatch) => {
