@@ -10,10 +10,11 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { set, deleteItem, like } from "./store/items";
 import { Button } from "@mui/material";
-import { RootState } from "./store/store";
+import { AppDispatch, RootState } from "./store/store";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Divider from "@mui/material/Divider";
 import Likes from "./Likes";
+import Coins from "./Coins";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const StyledContainer = styled.div`
 `;
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const items = useSelector<RootState>((store) => store?.items.value);
 
   const handleDelete = (id: number) => {
@@ -95,6 +96,8 @@ function App() {
           );
         })}
       </List>
+      <Divider />
+      <Coins />
     </StyledContainer>
   );
 }

@@ -43,13 +43,13 @@ const StyledListCont = styled(List)`
 `;
 
 const Likes = (props) => {
-  const { items, likesCounter, likedElements } = props;
+  const { items, likesCounter, likedElements = [] } = props;
 
   useEffect(() => {
     likesCounter(items);
   }, [items, likesCounter]);
 
-  if (typeof likedElements == "undefined" || likedElements.length == 0) {
+  if (likedElements.length === 0) {
     return <></>;
   }
   return (
