@@ -24,7 +24,6 @@ const Coins = () => {
 
   useEffect(() => {
     dispatch(getCoinsThunk(5));
-    console.log('Get');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
