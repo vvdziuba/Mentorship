@@ -1,16 +1,43 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, ThunkAction, AnyAction, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./store";
 
 export const getCoins = createAsyncThunk("coins/getCoins", async () => {
   return fetch("https://api.coincap.io/v2/assets?limit=10").then((res) =>
     res.json()
   );
 });
+
+export const getCoinsThunk = (limit: number | undefined = 10): ThunkAction<
+  void, RootState, unknown, AnyAction> => async (dispatch, getState) => {
+    dispatch(setLoader(true))
+    try {
+      const coinsResp = await fetch(`https://api.coincap.io/v2/assets?limit=${limit}`);
+      const coins = await coinsResp.json();
+      dispatch(setCoins(coins));
+    } catch (e: any) {
+      dispatch(setError(e?.message))
+    }
+    dispatch(setLoader(false))
+  };
+
 // @ts-ignore
 const coinsSlice = createSlice({
   name: "coins",
   initialState: {
     coins: [],
     loading: false,
+    errorMessage: '',
+  },
+  reducers: {
+    setCoins: (state, action) => {
+      state.coins = action.payload;
+    },
+    setLoader: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.errorMessage = action.payload;
+    },
   },
   extraReducers: {
     // @ts-ignore
@@ -28,5 +55,7 @@ const coinsSlice = createSlice({
     },
   },
 });
+
+export const { setCoins, setLoader, setError } = coinsSlice.actions;
 
 export default coinsSlice.reducer;

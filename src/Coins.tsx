@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { AppDispatch, RootState } from "./store/store";
 import Divider from "@mui/material/Divider";
-import { getCoins } from "./store/coins";
+import { getCoinsThunk } from "./store/coins";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const StyledLoader = styled(CircularProgress)`
@@ -22,17 +22,18 @@ const Coins = () => {
   // @ts-ignore
   const { coins, loading } = useSelector<RootState>((store) => store?.coins);
 
-  console.log(loading);
   useEffect(() => {
-    dispatch(getCoins());
+    dispatch(getCoinsThunk(5));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
   const showCoins = () => {
-    dispatch(getCoins());
+    dispatch(getCoinsThunk(coins?.data?.length + 1));
   };
 
   return (
     <>
-      <Button variant="contained" onClick={() => showCoins()}>
+      <Button variant="contained" onClick={showCoins}>
         Update Coins
       </Button>
       {loading && <StyledLoader color="secondary" />}
@@ -47,6 +48,9 @@ const Coins = () => {
                   <ListItemText
                     id={value.id}
                     primary={`${Number(value.priceUsd).toFixed(1)} $`}
+                    sx={{
+                      textAlign: 'right'
+                    }}
                   />
                 </ListItemButton>
               </ListItem>
