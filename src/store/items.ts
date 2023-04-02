@@ -15,7 +15,7 @@ export type ItemsType = {
 // Define the initial state using that type
 const initialState: ItemsType = {
   // @ts-ignore
-  value: [],
+  value: [] as ItemsType[],
 };
 
 export const counterSlice = createSlice({
