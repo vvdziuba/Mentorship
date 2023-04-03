@@ -13,8 +13,8 @@ const StyledLoader = styled(CircularProgress)`
 
 const Coins = () => {
   const dispatch = useDispatch<AppDispatch>();
-  // @ts-ignore
-  const { coins, loading } = useSelector<RootState[]>((store) => store?.coins);
+
+  const { coins, loading } = useSelector((store: RootState) => store?.coins);
 
   useEffect(() => {
     dispatch(getCoinsThunk(5));
@@ -22,7 +22,7 @@ const Coins = () => {
   }, []);
 
   const refreshCoins = () => {
-    dispatch(getCoinsThunk(coins?.data?.length + 1));
+    dispatch(getCoinsThunk(coins?.length + 1));
   };
 
   return (

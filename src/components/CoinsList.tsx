@@ -1,21 +1,18 @@
-import React, { useEffect } from "react";
+import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { CoinsItems } from "../store/coins";
 import CoinsListItem from "./CoinsListItem";
 
 const CoinsList = () => {
-  // @ts-ignore
-  const { coins } = useSelector<RootState>((store) => store?.coins);
+  const { coins } = useSelector((store: RootState) => store?.coins);
 
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {((coins.data as CoinsItems[]) || []).map((value, ind) => {
+      {coins.map((value, ind) => {
         return (
           <>
             <ListItem key={ind} disablePadding>
