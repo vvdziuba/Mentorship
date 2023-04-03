@@ -7,7 +7,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
-export interface CoinsItems {
+export interface CoinsItemInterface {
   name: string;
   priceUsd: number;
   id: string;
@@ -23,30 +23,37 @@ export const getCoinsThunk =
   (
     limit: number | undefined = 10
   ): ThunkAction<void, RootState, unknown, AnyAction> =>
-  async (dispatch, getState) => {
-    dispatch(setLoader(true));
-    try {
-      const coinsResp = await fetch(
-        `https://api.coincap.io/v2/assets?limit=${limit}`
-      );
-      const coins = await coinsResp.json();
-      dispatch(setCoins(coins as CoinsItems));
-    } catch (e: any) {
-      dispatch(setError(e?.message));
-    }
-    dispatch(setLoader(false));
-  };
+    async (dispatch) => {
+      dispatch(setLoader(true));
+      try {
+        const coinsResp = await fetch(
+          `https://api.coincap.io/v2/assets?limit=${limit}`
+        );
+        const { data: coins } = await coinsResp.json();
+        dispatch(setCoins(coins as CoinsItemInterface[]));
+      } catch (e: any) {
+        dispatch(setError(e?.message));
+      }
+      dispatch(setLoader(false));
+    };
 
-// @ts-ignore
+interface InitialState {
+  coins: CoinsItemInterface[],
+  loading: boolean,
+  errorMessage: string,
+}
+
+const initialState: InitialState = {
+  coins: [],
+  loading: false,
+  errorMessage: "",
+};
+
 const coinsSlice = createSlice({
   name: "coins",
-  initialState: {
-    coins: [] as CoinsItems[],
-    loading: false,
-    errorMessage: "",
-  },
+  initialState,
   reducers: {
-    setCoins: (state, action) => {
+    setCoins: (state, action: PayloadAction<CoinsItemInterface[]>) => {
       state.coins = action.payload;
     },
     setLoader: (state, action: PayloadAction<boolean>) => {
@@ -56,20 +63,17 @@ const coinsSlice = createSlice({
       state.errorMessage = action.payload;
     },
   },
-  extraReducers: {
-    // @ts-ignore
-    [getCoins.pending]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(getCoins.pending, (state) => {
       state.loading = true;
-    },
-    // @ts-ignore
-    [getCoins.fulfilled]: (state, action) => {
+    });
+    builder.addCase(getCoins.fulfilled, (state, action) => {
       state.loading = false;
       state.coins = action.payload;
-    },
-    // @ts-ignore
-    [getCoins.rejected]: (state, action) => {
+    });
+    builder.addCase(getCoins.rejected, (state) => {
       state.loading = false;
-    },
+    });
   },
 });
 
