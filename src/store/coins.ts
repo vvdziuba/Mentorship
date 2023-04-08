@@ -23,24 +23,24 @@ export const getCoinsThunk =
   (
     limit: number | undefined = 10
   ): ThunkAction<void, RootState, unknown, AnyAction> =>
-    async (dispatch) => {
-      dispatch(setLoader(true));
-      try {
-        const coinsResp = await fetch(
-          `https://api.coincap.io/v2/assets?limit=${limit}`
-        );
-        const { data: coins } = await coinsResp.json();
-        dispatch(setCoins(coins as CoinsItemInterface[]));
-      } catch (e: any) {
-        dispatch(setError(e?.message));
-      }
-      dispatch(setLoader(false));
-    };
+  async (dispatch) => {
+    dispatch(setLoader(true));
+    try {
+      const coinsResp = await fetch(
+        `https://api.coincap.io/v2/assets?limit=${limit}`
+      );
+      const { data: coins } = await coinsResp.json();
+      dispatch(setCoins(coins as CoinsItemInterface[]));
+    } catch (e: any) {
+      dispatch(setError(e?.message));
+    }
+    dispatch(setLoader(false));
+  };
 
 interface InitialState {
-  coins: CoinsItemInterface[],
-  loading: boolean,
-  errorMessage: string,
+  coins: CoinsItemInterface[];
+  loading: boolean;
+  errorMessage: string;
 }
 
 const initialState: InitialState = {
