@@ -3,13 +3,11 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useCoinsData } from "../../hooks/useCoinsData";
 import CoinsListItem from "./CoinsListItem";
 
 const CoinsList = () => {
-  const { coins } = useSelector((store: RootState) => store?.coins);
-
+  const { coins } = useCoinsData(5);
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {coins.map((value, ind) => {
