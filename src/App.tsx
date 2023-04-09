@@ -15,6 +15,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Divider from "@mui/material/Divider";
 import Likes from "./Likes";
 import Coins from "./Coins";
+import ErrorBoundary from "./components/ErrorBoundaryComponent/ErrorBoundary";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -60,7 +61,7 @@ function App() {
         {(items as any[]).map((value, ind) => {
           const labelId = `checkbox-list-label-${value}`;
           return (
-            <>
+            <div key={ind}>
               <ListItem
                 key={ind}
                 secondaryAction={
@@ -92,12 +93,14 @@ function App() {
                 </ListItemButton>
               </ListItem>
               <Divider light={false} />
-            </>
+            </div>
           );
         })}
       </List>
       <Divider />
-      <Coins />
+      <ErrorBoundary>
+        <Coins />
+      </ErrorBoundary>
     </StyledContainer>
   );
 }

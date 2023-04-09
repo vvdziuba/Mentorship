@@ -59,10 +59,10 @@ const Likes = (props) => {
         <StyledDivider />
       </StyledTitle>
       <StyledListCont sx={{ width: "100%", maxWidth: 360 }}>
-        {(likedElements || []).map((elem) => {
+        {(likedElements || []).map((elem, ind) => {
           if (elem.likes) {
             return (
-              <ListItem>
+              <ListItem key={ind}>
                 <StyledListItem>{`${elem.title} has ${elem.likes} likes`}</StyledListItem>
               </ListItem>
             );

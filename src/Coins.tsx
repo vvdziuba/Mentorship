@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import CoinsList from "./components/CoinsList";
+import CoinsList from "./components/CoinsComponents/CoinsList";
 import { useCoinsData } from "./hooks/useCoinsData";
 
 const StyledLoader = styled(CircularProgress)`

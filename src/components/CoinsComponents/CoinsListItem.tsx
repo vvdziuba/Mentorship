@@ -1,5 +1,5 @@
 import { ListItemText } from "@mui/material";
-import { CoinsItemInterface } from "../store/coins";
+import { CoinsItemInterface } from "../../store/coins";
 import { FC } from "react";
 
 type CoinsListItemProps = Partial<CoinsItemInterface>;

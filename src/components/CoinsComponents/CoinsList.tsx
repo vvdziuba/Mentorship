@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 import CoinsListItem from "./CoinsListItem";
 
 const CoinsList = () => {
@@ -14,7 +14,7 @@ const CoinsList = () => {
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {coins.map((value, ind) => {
         return (
-          <>
+          <div key={ind}>
             <ListItem key={ind} disablePadding>
               <ListItemButton role={undefined} dense>
                 <ListItemIcon />
@@ -26,7 +26,7 @@ const CoinsList = () => {
               </ListItemButton>
             </ListItem>
             <Divider light={false} />
-          </>
+          </div>
         );
       })}
     </List>
