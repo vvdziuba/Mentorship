@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ListItemText } from "@mui/material";
 import { useRouter } from "next/router";
 import { Button } from "@mui/material";
+import Link from "next/link";
 
 const StyledListItemText = styled(ListItemText)`
   text-align: center;
@@ -19,9 +20,9 @@ const Coins = ({ coins }) => {
       </Button>
       {(coins || []).map((coin, ind) => {
         return (
-          <>
+          <Link href={"/coins/" + coin.id} key={coin.id}>
             <StyledListItemText id={coin.id} primary={coin.name} />
-          </>
+          </Link>
         );
       })}
     </div>
