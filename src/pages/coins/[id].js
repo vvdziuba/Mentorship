@@ -1,13 +1,13 @@
 import Typography from "@mui/joy/Typography";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 // NEED EXPLANATIONS WHY IT WORKs WITHOUT THIS CODE
 
 // export const getStaticPaths = async () => {
 //   const res = await fetch("https://api.coincap.io/v2/assets");
 //   const json = await res.json();
-
 //   const paths = json.data.map((coin) => {
 //     return {
 //       params: { id: coin.id },
@@ -50,6 +50,7 @@ const CoinDetailsPage = ({ coin }) => {
         </p>
         <p>Change Percent 24Hr: {Number(coin.changePercent24Hr).toFixed(5)}</p>
       </Typography>
+      <Image src="/my-bitcoin.jpg" alt="Pic" width={100} height={100} />
     </div>
   );
 };
