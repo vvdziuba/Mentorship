@@ -3,6 +3,6 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-  assetPrefix: "/vvdziuba.github.io",
+  // assetPrefix: "/vvdziuba.github.io",
   output: "export",
 };
