@@ -3,18 +3,18 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-// export const getStaticPaths = async () => {
-//   const res = await fetch("https://api.coincap.io/v2/assets?limit=10");
-//   const json = await res.json();
-//   const paths = json.data.map((coin) => {
-//     return {
-//       params: { id: coin.id },
-//     };
-//   });
-//   return { paths, fallback: false };
-// };
+export const getStaticPaths = async () => {
+  const res = await fetch("https://api.coincap.io/v2/assets?limit=10");
+  const json = await res.json();
+  const paths = json.data.map((coin) => {
+    return {
+      params: { id: coin.id },
+    };
+  });
+  return { paths, fallback: false };
+};
 
-export const getServerSideProps = async (context) => {
+export const getStaticProps = async (context) => {
   const id = context.params.id;
   const res = await fetch("https://api.coincap.io/v2/assets/" + id);
   const coins = await res.json();
