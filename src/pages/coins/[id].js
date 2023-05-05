@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 export const getStaticPaths = async () => {
-  const res = await fetch("https://api.coincap.io/v2/assets?limit=10");
+  const res = await fetch("https://api.coincap.io/v2/assets?limit=20");
   const json = await res.json();
   const paths = json.data.map((coin) => {
     return {
