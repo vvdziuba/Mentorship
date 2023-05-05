@@ -4,4 +4,5 @@ module.exports = {
     unoptimized: true,
   },
   assetPrefix: "/vvdziuba.github.io",
+  output: "export",
 };
