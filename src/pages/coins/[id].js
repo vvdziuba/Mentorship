@@ -25,7 +25,6 @@ export const getStaticProps = async (context) => {
 
 const CoinDetailsPage = ({ coin }) => {
   const navigate = useRouter();
-
   const goBack = () => {
     navigate.replace("/coins");
   };
