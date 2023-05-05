@@ -32,7 +32,7 @@ export const getStaticProps = async () => {
   const res = await fetch("https://api.coincap.io/v2/assets?limit=20");
   const json = await res.json();
 
-  return { coins: json.data };
+  return { props: { coins: json.data } };
 };
 
 export default Coins;
